@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>StamboomController.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;StamboomProject&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">stamboom.controller</a> &gt; <span class="el_source">StamboomController.java</span></div><h1>StamboomController.java</h1><pre class="source lang-java linenums">/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package stamboom.controller;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Properties;
+
+import stamboom.domain.Administratie;
+import stamboom.storage.IStorageMediator;
+import stamboom.storage.SerializationMediator;
+
+public class StamboomController {
+
+    private Administratie admin;
+    private IStorageMediator storageMediator;
+
+    /**
+     * creatie van stamboomcontroller met lege administratie en onbekend
+     * opslagmedium
+     */
+<span class="fc" id="L24">    public StamboomController() {</span>
+<span class="fc" id="L25">        admin = new Administratie();</span>
+<span class="fc" id="L26">        storageMediator = null;</span>
+<span class="fc" id="L27">    }</span>
+
+    public Administratie getAdministratie() {
+<span class="fc" id="L30">        return admin;</span>
+    }
+
+    /**
+     * administratie wordt leeggemaakt (geen personen en geen gezinnen)
+     */
+    public void clearAdministratie() {
+<span class="nc" id="L37">        admin = new Administratie();</span>
+<span class="nc" id="L38">    }</span>
+
+    /**
+     * administratie wordt in geserialiseerd bestand opgeslagen
+     *
+     * @param bestand
+     * @throws IOException
+     */
+    public void serialize(File bestand) throws IOException {
+<span class="fc" id="L47">        SerializationMediator serializationMediator = new SerializationMediator();</span>
+
+<span class="fc" id="L49">        Properties props = new Properties();</span>
+
+<span class="fc" id="L51">        props.setProperty(&quot;file&quot;, String.valueOf(bestand.getAbsoluteFile()));</span>
+
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        if(serializationMediator.configure(props) == false)</span>
+<span class="nc" id="L54">            throw new IOException(&quot;Properties could not be loaded&quot;);</span>
+
+<span class="nc" id="L56">        serializationMediator.save(this.admin);</span>
+
+<span class="nc" id="L58">    }</span>
+
+    /**
+     * administratie wordt vanuit geserialiseerd bestand gevuld
+     *
+     * @param bestand
+     * @throws IOException
+     */
+    public void deserialize(File bestand) throws IOException {
+<span class="nc" id="L67">        SerializationMediator serializationMediator = new SerializationMediator();</span>
+
+<span class="nc" id="L69">        Properties props = new Properties();</span>
+
+<span class="nc" id="L71">        props.setProperty(&quot;file&quot;, String.valueOf(bestand.getAbsoluteFile()));</span>
+
+<span class="nc" id="L73">        serializationMediator.configure(props);</span>
+
+<span class="nc" id="L75">        this.admin = serializationMediator.load();</span>
+<span class="nc" id="L76">    }</span>
+    
+    // opgave 4
+    private void initDatabaseMedium() throws IOException {
+//        if (!(storageMediator instanceof DatabaseMediator)) {
+//            Properties props = new Properties();
+//            try (FileInputStream in = new FileInputStream(&quot;database.properties&quot;)) {
+//                props.load(in);
+//            }
+//            storageMediator = new DatabaseMediator(props);
+//        }
+<span class="nc" id="L87">    }</span>
+    
+    /**
+     * administratie wordt vanuit standaarddatabase opgehaald
+     *
+     * @throws IOException
+     */
+    public void loadFromDatabase() throws IOException {
+        //todo opgave 4
+<span class="fc" id="L96">    }</span>
+
+    /**
+     * administratie wordt in standaarddatabase bewaard
+     *
+     * @throws IOException
+     */
+    public void saveToDatabase() throws IOException {
+        //todo opgave 4
+<span class="fc" id="L105">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
