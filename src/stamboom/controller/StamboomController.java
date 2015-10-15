@@ -5,7 +5,9 @@
 package stamboom.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Properties;
 
 import stamboom.domain.Administratie;
@@ -64,6 +66,14 @@ public class StamboomController {
      * @throws IOException
      */
     public void deserialize(File bestand) throws IOException {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(bestand))) {
+            this.admin = (Administratie) in.readObject();
+        } catch (IOException ex) {
+            System.out.println("Niet gewerkt" + ex.getMessage());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        /*
         SerializationMediator serializationMediator = new SerializationMediator();
 
         Properties props = new Properties();
@@ -72,7 +82,7 @@ public class StamboomController {
 
         serializationMediator.configure(props);
 
-        this.admin = serializationMediator.load();
+        this.admin = serializationMediator.load();*/
     }
     
     // opgave 4

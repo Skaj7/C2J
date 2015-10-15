@@ -3,10 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/HP%20user/Documents/AlleVakkenNu/C2J31/opdracht/C2j-master/src/stamboom/gui/StamboomFXController.java</file>
-            <file>file:/C:/Users/HP%20user/Documents/AlleVakkenNu/C2J31/opdracht/C2j-master/tst/stamboom/domain/DomeinTest.java</file>
-            <file>file:/C:/Users/HP%20user/Documents/AlleVakkenNu/C2J31/opdracht/C2j-master/src/stamboom/domain/Administratie.java</file>
-            <file>file:/C:/Users/HP%20user/Documents/AlleVakkenNu/C2J31/opdracht/C2j-master/tst/stamboom/domain/StamboomTest.java</file>
+            <file>file:/C:/Users/HP%20user/Documents/AlleVakkenNu/C2J31/opdracht/GitC2J/C2J/src/stamboom/domain/Gezin.java</file>
+            <file>file:/C:/Users/HP%20user/Documents/AlleVakkenNu/C2J31/opdracht/GitC2J/C2J/src/stamboom/domain/Administratie.java</file>
+            <file>file:/C:/Users/HP%20user/Documents/AlleVakkenNu/C2J31/opdracht/GitC2J/C2J/src/stamboom/gui/StamboomFXController.java</file>
+            <file>file:/C:/Users/HP%20user/Documents/AlleVakkenNu/C2J31/opdracht/GitC2J/C2J/src/stamboom/storage/DatabaseMediator.java</file>
+            <file>file:/C:/Users/HP%20user/Documents/AlleVakkenNu/C2J31/opdracht/GitC2J/C2J/src/stamboom/controller/StamboomController.java</file>
+            <file>file:/C:/Users/HP%20user/Documents/AlleVakkenNu/C2J31/opdracht/GitC2J/C2J/src/stamboom/storage/SerializationMediator.java</file>
+            <file>file:/C:/Users/HP%20user/Documents/AlleVakkenNu/C2J31/opdracht/GitC2J/C2J/src/stamboom/domain/Persoon.java</file>
         </group>
     </open-files>
 </project-private>

@@ -4,12 +4,16 @@
  */
 package stamboom.gui;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -17,6 +21,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javax.swing.JFileChooser;
+import static junit.framework.Assert.fail;
 import stamboom.controller.StamboomController;
 import stamboom.domain.Geslacht;
 import stamboom.domain.Gezin;
@@ -63,7 +69,6 @@ public class StamboomFXController extends StamboomController implements Initiali
     @FXML TextField tfGezinHuwelijk;
     @FXML TextField tfGezinScheiding;
     @FXML TextField tfGezinKinderen;
-    @FXML Button btStamboomGezin;
     
     //INVOER PERSOON
     @FXML TextField tfNieuweVoornamenPersoon;
@@ -91,6 +96,17 @@ public class StamboomFXController extends StamboomController implements Initiali
     public void initialize(URL url, ResourceBundle rb) {
         initComboboxes();
         withDatabase = false;
+        testData();
+    }
+    
+    private void testData(){
+        String[] vnaam = {"kaj"};
+        Calendar c = StringUtilities.datum("26-09-1993");
+        this.getAdministratie().addPersoon(Geslacht.MAN, vnaam, "suiker", "", c, "Endhoven", null);
+        String[] vnaam1 = {"q"};
+        Calendar c1 = StringUtilities.datum("25-09-1993");
+        this.getAdministratie().addPersoon(Geslacht.VROUW, vnaam1, "q", "", c1, "q", null);
+        this.getAdministratie().addOngehuwdGezin(this.getAdministratie().getPersoon(1), this.getAdministratie().getPersoon(2));
     }
 
     private void initComboboxes() {
@@ -121,6 +137,7 @@ public class StamboomFXController extends StamboomController implements Initiali
             tfGeslacht.setText(persoon.getGeslacht().toString());
             tfGebDatum.setText(StringUtilities.datumString(persoon.getGebDat()));
             tfGebPlaats.setText(persoon.getGebPlaats());
+            lvAlsOuderBetrokkenBij.setItems(persoon.getAlsOuderBetrokkenIn());
             if (persoon.getOuderlijkGezin() != null) {
                 cbOuderlijkGezin.getSelectionModel().select(persoon.getOuderlijkGezin());
             } else {
@@ -158,42 +175,35 @@ public class StamboomFXController extends StamboomController implements Initiali
     }
 
     private void showGezin(Gezin gezin) {
-        // todo opgave 3
+        if (gezin == null) {
+            clearTabPersoon();
+        } else {
+            tfGezinNr.setText(gezin.getNr() + "");
+            tfGezinOuder1.setText(gezin.getOuder1().getNaam());
+            tfGezinOuder2.setText(gezin.getOuder2().getNaam());
+            tfGezinHuwelijk.setText(StringUtilities.datumString(gezin.getHuwelijksdatum()));
+            tfGezinScheiding.setText(StringUtilities.datumString(gezin.getScheidingsdatum()));
+            tfGezinKinderen.setText(gezin.beschrijving());
+        }
 
     }
 
     public void setHuwdatum(Event evt) {
-        // todo opgave 3
-        Persoon o1 = null;
-        Persoon o2 = null;
-        for(Persoon p : getAdministratie().getPersonen())
-        {
-         if(p.getNaam() == tfGezinOuder1.getText())
-         {
-             o1 = p;
-         }
-         if(p.getNaam() == tfGezinOuder2.getText())
-         {
-             o2 = p;
-         }
-        }
-        getAdministratie().addHuwelijk(o1, o2,StringUtilities.datum(tfHuwelijkInvoer.getText()));
+        
+        
+        
+        Gezin g = (Gezin)cbGezin.getSelectionModel().getSelectedItem();
+        Calendar c = StringUtilities.datum(tfGezinHuwelijk.getText());
+        this.getAdministratie().setHuwelijk(g, c);
         
     }
 
     public void setScheidingsdatum(Event evt) {
-        // todo opgave 3
-        for(Gezin g1 : getAdministratie().getGezinnen())
-        {
-            if(g1.getOuder1().getNaam() == tfGezinOuder1.getText() || g1.getOuder1().getNaam() == tfGezinOuder2.getText())
-            {
-                if(g1.getOuder2().getNaam()== tfGezinOuder1.getText() || g1.getOuder2().getNaam() == tfGezinOuder2.getText())
-                {
-                    getAdministratie().setScheiding(g1,StringUtilities.datum(tfHuwelijkInvoer.getText()));
-                }
-            }
-        }
-
+        
+        Gezin g = (Gezin)cbGezin.getSelectionModel().getSelectedItem();
+        Calendar c = StringUtilities.datum(tfGezinScheiding.getText());
+        this.getAdministratie().setScheiding(g, c);
+        
     }
 
     public void cancelPersoonInvoer(Event evt) {
@@ -260,7 +270,8 @@ public class StamboomFXController extends StamboomController implements Initiali
 
     
     public void showStamboom(Event evt) {
-        // todo opgave 3
+        Persoon p = (Persoon)cbPersonen.getSelectionModel().getSelectedItem();
+        showDialog("Stamboom van " + p.getNaam(), p.stamboomAlsString());
         
     }
 
@@ -271,14 +282,35 @@ public class StamboomFXController extends StamboomController implements Initiali
     }
 
     
-    public void openStamboom(Event evt) {
-        // todo opgave 3
-       
+    public void openStamboom(Event evt) {        
+        
+        JFileChooser jf = new JFileChooser();
+        jf.showOpenDialog(jf);  
+        File testOpslag = new File(jf.getSelectedFile().toString());
+        try {
+            this.deserialize(testOpslag);
+            
+        } catch (IOException ex) {
+            System.out.println("oeps");
+        }
+
+        initComboboxes();
+     
     }
 
     
     public void saveStamboom(Event evt) {
-        // todo opgave 3
+        File testOpslag = new File("testOpslag");
+        if (testOpslag.exists()) {
+            testOpslag.delete();
+        }
+        try {
+            this.serialize(testOpslag);
+        } catch (IOException ex) {
+            System.out.println("oeps");
+            
+        }
+        
        
     }
 

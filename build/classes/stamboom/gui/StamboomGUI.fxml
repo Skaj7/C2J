@@ -111,18 +111,11 @@
               <content>
                 <AnchorPane>
                   <children>
-                    <SplitPane dividerPositions="0.4269293924466338" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <SplitPane dividerPositions="0.4355300859598854" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                       <items>
                         <BorderPane>
-                          <bottom>
-                            <Button id="btStamboom" fx:id="btStamboomGezin" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showStamboom" prefHeight="21.9998779296875" prefWidth="-1.0" text="Toon Stamboom" textAlignment="CENTER" BorderPane.alignment="CENTER_RIGHT">
-                              <BorderPane.margin>
-                                <Insets bottom="10.0" right="10.0" />
-                              </BorderPane.margin>
-                            </Button>
-                          </bottom>
                           <top>
-                            <ComboBox id="cbPersonen" fx:id="cbGezin" minHeight="-Infinity" minWidth="-Infinity" onAction="#selectGezin" prefHeight="25.0" prefWidth="237.0" promptText="kies persoon">
+                            <ComboBox id="cbPersonen" fx:id="cbGezin" minHeight="-Infinity" minWidth="-Infinity" onAction="#selectGezin" prefHeight="25.0" prefWidth="237.0" promptText="kies gezin">
                               <items>
                                 <FXCollections fx:factory="observableArrayList">
                                   <String fx:value="Item 1" />
@@ -142,47 +135,47 @@
                               <children>
                                 <Label alignment="CENTER_RIGHT" graphicTextGap="4.0" prefWidth="-1.0" text="Nr" textAlignment="RIGHT" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="0">
                                   <GridPane.margin>
-                                    <Insets right="5.0" fx:id="x3" />
+                                    <Insets right="5.0" fx:id="x31" />
                                   </GridPane.margin>
                                 </Label>
                                 <TextField id="tfPersoonNr" fx:id="tfGezinNr" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                                 <Label alignment="CENTER_RIGHT" graphicTextGap="4.0" prefWidth="-1.0" text="Ouder1" textAlignment="RIGHT" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                                   <GridPane.margin>
-                                    <Insets right="5.0" fx:id="x3" />
+                                    <Insets right="5.0" fx:id="x32" />
                                   </GridPane.margin>
                                 </Label>
                                 <Label alignment="CENTER_RIGHT" graphicTextGap="4.0" prefWidth="-1.0" text="Ouder2" textAlignment="RIGHT" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                                   <GridPane.margin>
-                                    <Insets right="5.0" fx:id="x3" />
+                                    <Insets right="5.0" fx:id="x33" />
                                   </GridPane.margin>
                                 </Label>
                                 <Label alignment="CENTER_RIGHT" graphicTextGap="4.0" prefWidth="-1.0" text="Huwelijk" textAlignment="RIGHT" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                                   <GridPane.margin>
-                                    <Insets right="5.0" fx:id="x3" />
+                                    <Insets right="5.0" fx:id="x34" />
                                   </GridPane.margin>
                                 </Label>
                                 <Label alignment="CENTER_RIGHT" graphicTextGap="4.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.500091552734375" prefWidth="-1.0" text="Scheiding" textAlignment="RIGHT" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
                                   <GridPane.margin>
-                                    <Insets right="5.0" fx:id="x3" />
+                                    <Insets right="5.0" fx:id="x35" />
                                   </GridPane.margin>
                                 </Label>
                                 <Label alignment="CENTER_RIGHT" graphicTextGap="4.0" prefWidth="-1.0" text="Kinderen" textAlignment="RIGHT" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
                                   <GridPane.margin>
-                                    <Insets right="5.0" fx:id="x3" />
+                                    <Insets right="5.0" fx:id="x36" />
                                   </GridPane.margin>
                                 </Label>
-                                <TextField id="tfVoornamen" fx:id="tfGezinOuder1" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <TextField id="tfTussenvoegsel" fx:id="tfGezinOuder2" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                <TextField id="tfAchternaam" fx:id="tfGezinHuwelijk" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                <TextField id="tfPersoonNr" fx:id="tfGezinKinderen" maxHeight="-Infinity" prefHeight="126.0" prefWidth="218.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                <TextField id="tfGeslacht" fx:id="tfGezinScheiding" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                <TextField id="tfGezinOuder1" fx:id="tfGezinOuder1" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <TextField id="tfGezinOuder2" fx:id="tfGezinOuder2" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <TextField id="tfGezinHuwelijk" fx:id="tfGezinHuwelijk" onAction="#setHuwdatum" onInputMethodTextChanged="#setHuwdatum" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                <TextField id="tfGezinKinderen" fx:id="tfGezinKinderen" maxHeight="-Infinity" prefHeight="126.0" prefWidth="218.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                <TextField id="tfGezinScheiding" fx:id="tfGezinScheiding" onAction="#setScheidingsdatum" onInputMethodTextChanged="#setScheidingsdatum" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               </children>
                               <columnConstraints>
                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="68.0" />
                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="326.0" minWidth="10.0" prefWidth="182.0" />
                               </columnConstraints>
                               <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" fx:id="x1" />
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" fx:id="x11" />
                               </padding>
                               <rowConstraints>
                                 <RowConstraints maxHeight="24.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
@@ -267,7 +260,7 @@
                                 <Button id="btOKGezinInvoer" fx:id="btOKPersoonInvoer" mnemonicParsing="false" onMouseClicked="#okPersoonInvoer" text="Ok" />
                               </children>
                               <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" fx:id="x1" />
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" fx:id="x12" />
                               </padding>
                             </HBox>
                           </children>
@@ -291,7 +284,7 @@
                                 <TextField fx:id="tfScheidingInvoer" onAction="#setScheidingsdatum" prefHeight="-1.0" promptText="dd-mm-jjjj" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                 <Label alignment="CENTER_RIGHT" prefHeight="-1.0" prefWidth="-1.0" text="Scheiding op" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                                   <GridPane.margin>
-                                    <Insets right="5.0" fx:id="x3" />
+                                    <Insets right="5.0" fx:id="x37" />
                                   </GridPane.margin>
                                 </Label>
                                 <TextField fx:id="tfHuwelijkInvoer" prefHeight="-1.0" promptText="dd-mm-jjjj" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -315,17 +308,17 @@
                                 </ComboBox>
                                 <Label alignment="CENTER_RIGHT" prefHeight="-1.0" prefWidth="-1.0" text="Ouder 1" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="0">
                                   <GridPane.margin>
-                                    <Insets right="5.0" fx:id="x3" />
+                                    <Insets right="5.0" fx:id="x38" />
                                   </GridPane.margin>
                                 </Label>
                                 <Label alignment="CENTER_RIGHT" prefHeight="-1.0" prefWidth="-1.0" text="Ouder 2" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                                   <GridPane.margin>
-                                    <Insets right="5.0" fx:id="x3" />
+                                    <Insets right="5.0" fx:id="x39" />
                                   </GridPane.margin>
                                 </Label>
                                 <Label alignment="CENTER_RIGHT" prefHeight="-1.0" prefWidth="-1.0" text="Huwelijk op " GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                                   <GridPane.margin>
-                                    <Insets right="5.0" fx:id="x3" />
+                                    <Insets right="5.0" fx:id="x310" />
                                   </GridPane.margin>
                                 </Label>
                               </children>
@@ -334,7 +327,7 @@
                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.0" minWidth="10.0" prefWidth="279.0" />
                               </columnConstraints>
                               <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" fx:id="x1" />
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" fx:id="x13" />
                               </padding>
                               <rowConstraints>
                                 <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
@@ -353,7 +346,7 @@
                                 <Button fx:id="btOKGezinInvoer" mnemonicParsing="false" onAction="#okGezinInvoer" text="Ok" />
                               </children>
                               <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" fx:id="x1" />
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" fx:id="x14" />
                               </padding>
                             </HBox>
                           </children>

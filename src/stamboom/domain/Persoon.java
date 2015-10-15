@@ -1,5 +1,7 @@
 package stamboom.domain;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,7 +24,7 @@ public class Persoon implements Serializable {
     private final String gebPlaats;
     private Gezin ouderlijkGezin;
     private final List<Gezin> alsOuderBetrokkenIn;
-    private ObservableList<Gezin> observableAlsOuderBetrokkenIn;
+    private transient ObservableList<Gezin> observableAlsOuderBetrokkenIn;
     private final Geslacht geslacht;
 
 
@@ -214,10 +216,10 @@ public class Persoon implements Serializable {
                 sb.append("; 2e ouder: ").append(ouderlijkGezin.getOuder2().getNaam());
             }
         }
-        if (!alsOuderBetrokkenIn.isEmpty()) {
+        if (!observableAlsOuderBetrokkenIn.isEmpty()) {
             sb.append("; is ouder in gezin ");
 
-            for (Gezin g : alsOuderBetrokkenIn) {
+            for (Gezin g : observableAlsOuderBetrokkenIn) {
                 sb.append(g.getNr()).append(" ");
             }
         }
@@ -233,8 +235,8 @@ public class Persoon implements Serializable {
      *
      */
     void wordtOuderIn(Gezin g) {
-        if (!alsOuderBetrokkenIn.contains(g)) {
-            alsOuderBetrokkenIn.add(g);
+        if (!observableAlsOuderBetrokkenIn.contains(g)) {
+            observableAlsOuderBetrokkenIn.add(g);
         }
     }
 
@@ -246,7 +248,7 @@ public class Persoon implements Serializable {
      * null
      */
     public Gezin heeftOngehuwdGezinMet(Persoon andereOuder) {
-        for (Gezin g : alsOuderBetrokkenIn) {
+        for (Gezin g : observableAlsOuderBetrokkenIn) {
             if (g.getOuder2() != null && (g.getOuder2().equals(andereOuder)
                     || g.getOuder1().equals(andereOuder)))
                 return g;
@@ -260,7 +262,7 @@ public class Persoon implements Serializable {
      * @return true als persoon op datum getrouwd is, anders false
      */
     public boolean isGetrouwdOp(Calendar datum) {
-        for (Gezin gezin : alsOuderBetrokkenIn) {
+        for (Gezin gezin : observableAlsOuderBetrokkenIn) {
             if (gezin.heeftGetrouwdeOudersOp(datum)) {
                 return true;
             }
@@ -282,7 +284,7 @@ public class Persoon implements Serializable {
             return false;
         }
 
-        for (Gezin gezin : alsOuderBetrokkenIn) {
+        for (Gezin gezin : observableAlsOuderBetrokkenIn) {
             if (gezin.heeftGetrouwdeOudersOp(datum)) {
                 return false;
             } else {
@@ -301,7 +303,7 @@ public class Persoon implements Serializable {
      * @return true als persoon op datum gescheiden is, anders false
      */
     public boolean isGescheidenOp(Calendar datum) {
-        for (Gezin g : alsOuderBetrokkenIn) {
+        for (Gezin g : observableAlsOuderBetrokkenIn) {
             if (g.getScheidingsdatum() != null
                     && g.getScheidingsdatum().equals(datum)
                     && g.getScheidingsdatum().before(Calendar.getInstance()))
@@ -405,5 +407,11 @@ public class Persoon implements Serializable {
         }
 
         return builder.toString();
+    }
+    
+    private void readObject(ObjectInputStream ois)
+        throws IOException, ClassNotFoundException {
+            ois.defaultReadObject();
+            observableAlsOuderBetrokkenIn = FXCollections.observableList(alsOuderBetrokkenIn);
     }
 }

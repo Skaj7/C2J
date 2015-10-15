@@ -1,5 +1,7 @@
 package stamboom.domain;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.*;
 import javafx.beans.property.LongProperty;
@@ -15,7 +17,7 @@ public class Gezin implements Serializable {
     private final Persoon ouder1;
     private final Persoon ouder2;
     private final List<Persoon> kinderen;
-    private ObservableList<Persoon> observableKinderen;
+    private transient ObservableList<Persoon> observableKinderen;
     /**
      * kan onbekend zijn (dan is het een ongehuwd gezin):
      */
@@ -88,7 +90,7 @@ public class Gezin implements Serializable {
      * @return het aantal kinderen in dit gezin
      */
     public int aantalKinderen() {
-        return kinderen.size();
+        return observableKinderen.size();
     }
 
     /**
@@ -203,9 +205,9 @@ public class Gezin implements Serializable {
         }
 
         // Toevoegen van de kinderen
-        if (kinderen != null && kinderen.size() >= 1) {
+        if (observableKinderen != null && observableKinderen.size() >= 1) {
             beschrijving = beschrijving + "; kinderen: ";
-            for (Persoon persoon : kinderen) {
+            for (Persoon persoon : observableKinderen) {
                 beschrijving = beschrijving + "-" + persoon.getVoornamen() + " ";
             }
         }
@@ -234,7 +236,7 @@ public class Gezin implements Serializable {
     boolean isFamilieVan(Persoon input) {
         if (this.ouder1.getNr() == input.getNr()
                 || (this.ouder2 != null && this.ouder2.getNr() == input.getNr())
-                || kinderen.contains(input)) {
+                || observableKinderen.contains(input)) {
             return true;
         }
 
@@ -294,4 +296,11 @@ public class Gezin implements Serializable {
         return  false;
 
     }
+    
+    private void readObject(ObjectInputStream ois)
+        throws IOException, ClassNotFoundException {
+            ois.defaultReadObject();
+            observableKinderen = FXCollections.observableList(kinderen);
+    }
+    
 }
